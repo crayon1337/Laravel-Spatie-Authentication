@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ _('Laravel 5.8 Authentication Sample') }}</title>
+    <title>Laravel 5.8 Authentication Sample @yield('title')</title>
     <style>
         p.teaser {
         text-indent: 30px;
@@ -42,9 +42,9 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                            @role('Admin')
+                            @can('Create News')
                                 <li class="nav-item"><a class="nav-link" href="{{ route('posts.create') }}">Submit New Article</a></li>
-                            @endrole
+                            @endcan
                             <!-- Authentication Links -->
                             @if (Auth::guest())
                                 <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
