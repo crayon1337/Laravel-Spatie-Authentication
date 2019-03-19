@@ -3,7 +3,7 @@
 
 @section('content')
     <div class='col-md-12'>
-        <h1><center>401<br>
+        <h1><center>403<br>
         ACCESS DENIED</center></h1>
     </div>
 
