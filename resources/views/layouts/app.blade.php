@@ -42,9 +42,19 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                            @can('Create News')
-                                <li class="nav-item"><a class="nav-link" href="{{ route('posts.create') }}">Submit New Article</a></li>
-                            @endcan
+                                @php ($roles = ['Supporter', 'Admin']) @endphp
+                                @hasanyrole($roles)
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Management Panel
+                                    </a>
+                                    @can('Create News')
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a href="{{ route('posts.create') }}" class="dropdown-item"> <i class="fas fa-newspaper"></i> New Article</a>
+                                    </div>
+                                    @endcan
+                                </li>
+                                @endhasanyrole
                             <!-- Authentication Links -->
                             @if (Auth::guest())
                                 <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
@@ -59,6 +69,7 @@
                                         @role('Admin') {{-- Laravel-permission blade helper --}}
                                             <a href="{{ route('users.index') }}" class="dropdown-item"><i class="fas fa-unlock"></i> Admin</a>
                                         @endrole
+                                    <a href="{{ route('user-panel.show', Auth::user()->id) }}" class="dropdown-item"> <i class="fas fa-user"></i> Panel</a>
                                         <a href="{{ route('logout') }}" class="dropdown-item"
                                             onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">

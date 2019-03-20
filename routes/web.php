@@ -21,6 +21,8 @@ Route::get('/', 'PostController@index')->name('home');
 
 Route::resource('users', 'UserController');
 
+Route::resource('user-panel', 'UserPanelController');
+
 Route::resource('roles', 'RoleController');
 
 Route::resource('permissions', 'PermissionController');
