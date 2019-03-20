@@ -22,13 +22,9 @@ class UserPanelController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $role = new Role;
-        if($user->roles()->pluck('id')->implode(' ') > 0)
-            $role = Role::findOrFail($user->roles()->pluck('id')->implode(' '));
-        if(Auth::user()->id != $id)
-            abort(403);
-        else
-            return view('user-panel.edit', compact('user', 'role'));
+        $role = $user->roles()->pluck('id')->implode(' ') > 0 ? Role::findOrFail($user->roles()->pluck('id')->implode(' ')) : null;
+        Auth::user()->id != $id ? abort(403) : '';
+        return view('user-panel.edit', compact('user', 'role'));
     }
 
     /**
@@ -50,19 +46,13 @@ class UserPanelController extends Controller
         ]);
 
         $user = User::findOrFail($id);
-        $hashedPassword = Hash::check($request['current_password'], $user->password);
 
-        if(!$hashedPassword)
-            $message = "Your current password does not match the one we have in the database.";
-        else
-        {
-            $user->password = $request['password'];
-            $user->save();
-        }
+        if(!Hash::check($request['current_password'], $user->password))
+            return redirect()->route('user-panel.show', $id)->withErrors("Your current password does not match the one we have in the database.");
 
-        if(isset($message))
-            return redirect()->route('user-panel.edit', $id)->withErrors($message);
-        else
-            return redirect()->route('user-panel.edit', $id)->with('flash_message', 'Your password has been updated!');
+        $user->password = $request['password'];
+        $user->save();
+
+        return redirect()->route('user-panel.show', $id)->with('flash_message', 'Your password has been updated!');
     }
 }

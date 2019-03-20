@@ -9,7 +9,7 @@
         <ul class="list-unstyled">
             <li><strong>Name:</strong> {{ $user->name }} </li>
             <li><strong>EMail:</strong> {{ $user->email }}</li>
-            @if(is_null($role))
+            @if(!is_null($role))
                 <li><strong>Role:</strong> {{  $user->roles()->pluck('name')->implode(' ') }}</li>
                 <li><strong>Permissions:</strong> {{ str_replace(array('[',']','"'),'', $role->permissions()->pluck('name')) }}</li>
             @endif
