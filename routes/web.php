@@ -17,7 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/', 'PostController@index')->name('home');
+Route::get('/', function() {
+    return view('posts.index');
+});
 
 Route::resource('users', 'UserController');
 
@@ -26,5 +28,3 @@ Route::resource('user-panel', 'UserPanelController');
 Route::resource('roles', 'RoleController');
 
 Route::resource('permissions', 'PermissionController');
-
-Route::resource('posts', 'PostController');

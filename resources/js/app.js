@@ -6,6 +6,18 @@
  */
 
 require('./bootstrap');
+require('vue-flash-message/dist/vue-flash-message.min.css');
+import Vue from 'vue'
+import VueTextareaAutosize from 'vue-textarea-autosize'
+import VueFlashMessage from 'vue-flash-message'
+
+Vue.use(VueTextareaAutosize)
+Vue.use(VueFlashMessage, {
+    createShortcuts: false,
+    messageOptions: {
+        timeout: 3000
+    }
+});
 
 window.Vue = require('vue');
 
@@ -20,7 +32,7 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('posts', require('./components/Posts.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
